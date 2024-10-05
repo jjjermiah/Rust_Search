@@ -121,8 +121,8 @@ impl Search {
                         // Lossy means that if the file name is not valid UTF-8
                         // it will be replaced with �.
                         // Will return the file name with extension.
-                        let file_name = file_name.to_string_lossy().to_string();
-                        if reg_exp.is_match(&file_name) {
+                        // let file_name = file_name.to_string_lossy().to_string();
+                        if reg_exp.is_match(&path.display().to_string()) {
                             // Continue searching if the send was successful
                             // and there is no limit or the limit has not been reached
                             if tx.send(path.display().to_string()).is_ok()
