@@ -1,6 +1,6 @@
 [package]
 name = "rust_search_fork"
-version = "2.1.1"
+version = "2.1.2"
 description = "Blazingly fast file search library built in Rust. Forked due to abandoned project."
 edition = "2021"
 authors = ["Parth Jadhav <jadhavparth99@gmail.com>", "Jermiah Joseph <jermiahjoseph98@gmail.com"]

@@ -27,6 +27,8 @@ pub struct SearchBuilder {
     filters: Vec<FilterType>,
     /// When set to false, will not apply filters to directories and will exclude them from results.
     dirs: bool,
+    /// The number of threads to use for searching.
+    threads: usize,
 }
 
 impl SearchBuilder {
@@ -45,6 +47,7 @@ impl SearchBuilder {
             self.hidden,
             self.filters.clone(),
             self.dirs,
+            self.threads,
         )
     }
 
@@ -253,6 +256,23 @@ impl SearchBuilder {
         self.dirs = value;
         self
     }
+
+    /// Set the number of threads to use for searching.
+    /// ### Arguments
+    /// * `threads` - The number of threads to use.
+    /// ### Examples
+    /// ```rust
+    /// use rust_search::SearchBuilder;
+    ///
+    /// let search: Vec<String> = SearchBuilder::default()
+    ///     .threads(4)
+    ///     .build()
+    ///     .collect();
+    /// ```
+    pub fn threads(mut self, threads: usize) -> Self {
+        self.threads = threads;
+        self
+    }
 }
 
 impl Default for SearchBuilder {
@@ -270,6 +290,7 @@ impl Default for SearchBuilder {
             hidden: false,
             filters: vec![],
             dirs: true,
+            threads: num_cpus::get(),
         }
     }
 }

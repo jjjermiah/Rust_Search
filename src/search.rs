@@ -61,6 +61,7 @@ impl Search {
     /// * `with_hidden` - Whether to search hidden files or not
     /// * `filters` - Vector of filters to search by `DirEntry` data
     /// * `dirs` - Whether to apply filters to directories and include them in results.
+    /// * `threads` - The number of threads to use for searching
     #[allow(clippy::too_many_arguments)]
     pub(crate) fn new(
         search_location: impl AsRef<Path>,
@@ -74,6 +75,7 @@ impl Search {
         with_hidden: bool,
         filters: Vec<FilterType>,
         dirs: bool,
+        threads: usize,
     ) -> Self {
         let regex_search_input =
             utils::build_regex_search_input(search_input, file_ext, strict, ignore_case);
@@ -84,7 +86,7 @@ impl Search {
             .hidden(!with_hidden)
             .git_ignore(true)
             .max_depth(depth)
-            .threads(cmp::min(12, num_cpus::get()));
+            .threads(cmp::min(threads, num_cpus::get()));
 
         // filters getting applied to walker
         // only if all filters are true then the walker will return the file
